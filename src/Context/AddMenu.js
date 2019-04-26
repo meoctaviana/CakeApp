@@ -14,11 +14,14 @@ import Header1 from '../Router/Header1';
 
 
 const imgUrl = [
-    "https://i.ibb.co/jRFgjbg/mint.jpg",
+    "https://i.ibb.co/WGsmcg5/1508728990.png",
+    "https://i.ibb.co/6Jvf66k/0027672-birthday-chocolate-cake-385.jpg",
     "https://i.ibb.co/HHyfDQH/theUlti.jpg",
     "https://i.ibb.co/ctY1TKt/cake3.jpg",
     "https://i.ibb.co/7ptTm4Z/whitecake.jpg",
-    "https://i.ibb.co/bKgz97f/cake2.jpg"
+    "https://i.ibb.co/bKgz97f/cake2.jpg",
+    "https://i.ibb.co/L92K1QG/pure-punch-1kg-cake.jpg"
+
 ];
 
 const levelList = ['EASY', 'MEDIUM', 'MORE EFFORT'];
@@ -39,18 +42,28 @@ export default class addMenu extends Component {
 
     }
     handleSubmit() {
-
+        dataP = {
+            'name': this.state.name,
+            'desc': this.state.desc,
+            'serves': this.state.serves,
+            'prep': this.state.prep,
+            'level': levelList[this.state.selectedLevel],
+            'pic': imgUrl[this.state.selectedIndex]
+        };
         this.props.navigation.navigate("Home", {
-            data:
-            {
-                'name': this.state.name,
-                'desc': this.state.desc,
-                'serves': this.state.serves,
-                'prep': this.state.prep,
-                'level': levelList[this.state.selectedLevel],
-                'pic': imgUrl[this.state.selectedIndex]
-            }
+            data: dataP
+        })
+        console.log(dataP);
 
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            selectedIndex: 0,
+            selectedLevel: 0,
+            name: '',
+            desc: '',
+            prep: '',
+            serves: '0'
         })
     }
 

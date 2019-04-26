@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, FlatList } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title, Fab } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Title, Fab, List } from 'native-base';
 import Header1 from '../Router/Header1';
 
 const listCakex = [{
@@ -50,33 +50,36 @@ export default class CardImageExample extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         // console.log(this.props.navigation.getParam("name"));
-        const { navigation } = nextProps;
-        const data = navigation.getParam('data', {});
-        console.log(data)
+        let { navigation } = nextProps;
+        data = navigation.getParam('data', {});
 
         listCake1 = this.state.listCake;
         lastId = listCake1[listCake1.length - 1].id;
         idBaru = parseInt(lastId) + 1;
-        console.log(idBaru);
 
         data.id = idBaru;
         listCake1.push(data)
-
-        console.log(listCake1);
+        // console.log(data);
         this.setState({
-            listCake: listCake1
+            listCake: listCake1,
+            refresh: !this.state.refresh
         })
 
     }
 
+    
+
     render() {
         console.log('render home')
+        cakeKu = this.state.listCake;
+        console.log(cakeKu)
         return (
             <Container>
                 <Header1 navigation={this.props.navigation} title="Home" />
                 <Content>
                     <FlatList
-                        data={this.state.listCake}
+                        extraData={this.state.refresh}
+                        data={cakeKu}
                         renderItem={({ item }) =>
                             <Card>
                                 <CardItem>
@@ -119,7 +122,7 @@ export default class CardImageExample extends React.Component {
                     containerStyle={{}}
                     style={{ backgroundColor: '#5067FF' }}
                     position="bottomRight"
-                    onPress={() => this.props.navigation.navigate("AddMenu")}
+                    onPress={() => this.props.navigation.navigate("AddMenu", true)}
                 >
                     <Icon name="add" />
 
